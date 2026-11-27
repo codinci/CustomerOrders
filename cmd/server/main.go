@@ -1,7 +1,7 @@
 package main
 
 import (
-	"example/go-app/graph"
+	"github.com/codinci/customerorders/internal/graph"
 	"log"
 	"net/http"
 	"os"
@@ -22,7 +22,7 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.New(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.New(graph.NewExecutableSchema(graph.Config{Resolvers: graph.NewResolver()}))
 
 	srv.AddTransport(transport.Options{})
 	srv.AddTransport(transport.GET{})
