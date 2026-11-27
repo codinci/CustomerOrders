@@ -1,0 +1,49 @@
+# Customer orders API.
+#
+# Money is a Decimal (exact, serialized as a string) and timestamps are Time
+# (RFC 3339). Do not reintroduce Float for money.
+
+scalar Time
+
+"""
+Exact decimal amount, serialized as a string, e.g. "19.9900".
+"""
+scalar Decimal
+
+type Customer {
+  id: ID!
+  name: String!
+  phoneNumber: String!
+  orders: [Order!]!
+}
+
+type Order {
+  id: ID!
+  product: String!
+  quantity: Int!
+  price: Decimal!
+  createdAt: Time!
+  customer: Customer!
+}
+
+input CreateCustomerInput {
+  name: String!
+  phoneNumber: String!
+}
+
+input PlaceOrderInput {
+  customerID: ID!
+  product: String!
+  quantity: Int!
+  price: Decimal!
+}
+
+type Query {
+  customers: [Customer!]!
+  orders: [Order!]!
+}
+
+type Mutation {
+  createCustomer(input: CreateCustomerInput!): Customer!
+  placeOrder(input: PlaceOrderInput!): Order!
+}
